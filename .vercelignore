@@ -1,0 +1,6 @@
+# Exclude root-level Python files so Vercel doesn't auto-detect a Python app.
+# The actual serverless function lives in api/solve.py.
+main.py
+solver.py
+pytest.ini
+tests/

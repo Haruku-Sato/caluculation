@@ -2,18 +2,13 @@
 Vercel serverless function for the equation solver.
 Accessible at POST /api/solve
 """
-import sys
-import os
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, field_validator
 
-from solver import solve_equations
+from api.solver import solve_equations
 
 app = FastAPI()
 
@@ -40,7 +35,7 @@ class SolveRequest(BaseModel):
         return v
 
 
-# Vercel passes the full URL path to the ASGI app, so the route must be /api/solve
+# Vercel passes the full URL path to the ASGI app
 @app.post("/api/solve")
 def solve(request: SolveRequest):
     try:
