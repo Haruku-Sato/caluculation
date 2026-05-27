@@ -1,4 +1,18 @@
 {
-  "builds": [{ "src": "main.py", "use": "@vercel/python" }],
-  "routes": [{ "src": "/(.*)", "dest": "main.py" }]
+  "version": 2,
+  "builds": [
+    { "src": "main.py", "use": "@vercel/python" },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [
+    { "src": "/solve", "dest": "main.py" },
+    { "src": "/docs(.*)", "dest": "main.py" },
+    { "src": "/openapi.json", "dest": "main.py" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
