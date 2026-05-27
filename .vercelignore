@@ -1,6 +1,8 @@
 # Exclude root-level Python files so Vercel doesn't auto-detect a Python app.
+# requirements.txt at root triggers FastAPI framework detection — use api/requirements.txt instead.
 # The actual serverless function lives in api/solve.py.
 main.py
 solver.py
+requirements.txt
 pytest.ini
 tests/
