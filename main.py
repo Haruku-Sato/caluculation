@@ -51,7 +51,7 @@ class SolveRequest(BaseModel):
 
 class SolveResponse(BaseModel):
     result: str
-    solutions: dict[str, str]
+    solutions: list[dict[str, str]]
     free_variables: list[str]
     note: Optional[str] = None
 

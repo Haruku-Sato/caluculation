@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 
-from sympy import Symbol, symbols, Eq, solve
+from sympy import Symbol, symbols, Eq, solve, latex
 from sympy.parsing.sympy_parser import (
     parse_expr,
     standard_transformations,
@@ -83,42 +83,39 @@ def solve_equations(
     if not raw:
         return {
             "result": "no_solution",
-            "solutions": {},
+            "solutions": [],
             "free_variables": [],
-            "note": "No solution exists for the given system.",
+            "note": None,
         }
 
-    solution_dict: dict = raw[0] if isinstance(raw, list) else raw
+    # Build list of solution sets with LaTeX-formatted values
+    solutions_list: list[dict[str, str]] = [
+        {str(k): latex(v) for k, v in sol_dict.items()}
+        for sol_dict in raw
+    ]
 
-    solutions = {str(k): str(v) for k, v in solution_dict.items()}
-
-    # Variables that appear free in any solution value
+    # Compute free variables from the first solution set
+    first = raw[0]
     free_syms: set[Symbol] = set()
-    for val in solution_dict.values():
+    for val in first.values():
         free_syms.update(val.free_symbols)
 
-    # Variables in solve_for that sympy didn't constrain at all
-    solved_syms = set(solution_dict.keys())
+    solved_syms = set(first.keys())
     unconstrained = [s for s in solve_for if s not in solved_syms]
     free_syms.update(unconstrained)
 
     free_variables = sorted(str(s) for s in free_syms)
 
-    if free_variables:
+    if len(raw) > 1:
+        result_type = "multiple"
+    elif free_variables:
         result_type = "parametric"
-        note = (
-            f"Free variable(s): {', '.join(free_variables)}. "
-            "The solution is expressed in terms of them."
-        )
     else:
         result_type = "unique"
-        note = None
 
-    response: dict = {
+    return {
         "result": result_type,
-        "solutions": solutions,
+        "solutions": solutions_list,
         "free_variables": free_variables,
+        "note": None,
     }
-    if note:
-        response["note"] = note
-    return response

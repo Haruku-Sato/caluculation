@@ -18,7 +18,7 @@ body {
   border-radius: 14px;
   padding: 2rem;
   width: 100%;
-  max-width: 520px;
+  max-width: 640px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -178,4 +178,103 @@ button {
 .no-solution {
   color: #dc2626;
   font-size: 0.95rem;
+}
+
+/* ───── 数式キーボード ───── */
+
+.math-keyboard {
+  background: #d4d4d4;
+  border-radius: 10px;
+  padding: 10px 8px 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.key {
+  background: white;
+  border: none;
+  border-radius: 5px;
+  padding: 9px 0;
+  min-width: 0;
+  flex: 1;
+  font-size: 0.82rem;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #aaa;
+  color: #222;
+  line-height: 1;
+  transition: none;
+}
+
+.key:hover {
+  background: #f8f8ff;
+}
+
+.key:active {
+  background: #e4e4f4;
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #aaa;
+}
+
+.key-space {
+  flex: 4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+.key-del {
+  flex: 1.5;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ───── KaTeX 表示 ───── */
+
+.katex-val {
+  font-family: inherit;
+}
+
+.katex-val .katex {
+  font-size: 1.1em;
+}
+
+/* ───── 複数解（二次方程式等） ───── */
+
+.multi-label {
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.solution-sets {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.solution-set {
+  background: #f8f8ff;
+  border: 1px solid #e0e0ff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  min-width: 120px;
+}
+
+.set-label {
+  font-size: 0.75rem;
+  color: #888;
+  display: block;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
