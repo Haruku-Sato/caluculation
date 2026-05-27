@@ -1,17 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "main.py", "use": "@vercel/python" },
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    }
-  ],
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
   "routes": [
-    { "src": "/solve", "dest": "main.py" },
-    { "src": "/docs(.*)", "dest": "main.py" },
-    { "src": "/openapi.json", "dest": "main.py" },
+    { "src": "/solve", "dest": "/api/index" },
+    { "src": "/docs(.*)", "dest": "/api/index" },
+    { "src": "/openapi.json", "dest": "/api/index" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
