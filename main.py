@@ -1,7 +1,10 @@
+import os
+from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, field_validator
 
 from solver import solve_equations
@@ -18,6 +21,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+DIST = Path(__file__).parent / "frontend" / "dist"
 
 
 class SolveRequest(BaseModel):
@@ -51,18 +56,9 @@ class SolveResponse(BaseModel):
     note: Optional[str] = None
 
 
-@app.get("/")
-def root():
-    return {
-        "message": "Equation Solver API",
-        "usage": "POST /solve with {\"equations\": [\"x + 2y = 3x - y\"]}",
-        "docs": "/docs",
-    }
-
-
 @app.post("/api/solve", response_model=SolveResponse)
-@app.post("/solve", response_model=SolveResponse)  # legacy alias
-def solve(request: SolveRequest):
+@app.post("/solve", response_model=SolveResponse)
+def solve_endpoint(request: SolveRequest):
     try:
         result = solve_equations(request.equations, request.variables)
     except ValueError as exc:
@@ -70,3 +66,15 @@ def solve(request: SolveRequest):
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Solver error: {exc}")
     return result
+
+
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str = ""):
+    """Serve the React SPA. Specific static assets or index.html fallback."""
+    if not DIST.exists():
+        return {"message": "Equation Solver API — build frontend: cd frontend && npm run build"}
+    target = DIST / full_path if full_path else DIST / "index.html"
+    if target.is_file():
+        return FileResponse(str(target))
+    # SPA fallback — let React Router handle the path
+    return FileResponse(str(DIST / "index.html"))
