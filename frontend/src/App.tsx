@@ -33,7 +33,7 @@ export default function App() {
     setResponse(null)
 
     try {
-      const res = await fetch('/solve', {
+      const res = await fetch('/api/solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ equations: nonEmpty }),

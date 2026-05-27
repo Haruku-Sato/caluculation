@@ -1,12 +1,4 @@
 {
-  "version": 2,
   "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
-  "routes": [
-    { "src": "/solve", "dest": "/api/main" },
-    { "src": "/docs(.*)", "dest": "/api/main" },
-    { "src": "/openapi.json", "dest": "/api/main" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ]
+  "outputDirectory": "frontend/dist"
 }
