@@ -1,0 +1,7 @@
+# ローカル開発用サーバー — Vercel には不要
+main.py
+requirements.txt
+
+# 開発ツール
+tests/
+.venv/
