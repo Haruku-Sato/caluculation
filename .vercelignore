@@ -1,6 +1,7 @@
-# ローカル開発用サーバー — Vercel には不要
+# ローカル開発用 — Vercel には不要
 main.py
 requirements.txt
+pyproject.toml
 
 # 開発ツール
 tests/

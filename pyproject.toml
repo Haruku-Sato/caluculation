@@ -8,6 +8,4 @@ dependencies = [
     "sympy>=1.12",
 ]
 
-[tool.vercel]
-entrypoint = "api.solve:app"
 
