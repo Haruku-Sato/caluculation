@@ -8,5 +8,3 @@ dependencies = [
     "sympy>=1.12",
 ]
 
-[tool.vercel]
-entrypoint = "main:app"
