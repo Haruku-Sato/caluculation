@@ -1,7 +1,5 @@
-# ローカル開発用 — Vercel には不要
-main.py
+# ローカル開発用依存 — Vercel の pip install と競合するため除外
 requirements.txt
-pyproject.toml
 
 # 開発ツール
 tests/

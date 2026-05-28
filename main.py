@@ -68,6 +68,19 @@ def solve_endpoint(request: SolveRequest):
     return result
 
 
+@app.get("/debug-path")
+async def debug_path():
+    """Temporary: shows file system state on Vercel for debugging."""
+    files = sorted(str(p.relative_to(DIST)) for p in DIST.rglob("*") if p.is_file())[:30] if DIST.exists() else []
+    return {
+        "__file__": __file__,
+        "cwd": os.getcwd(),
+        "DIST": str(DIST),
+        "DIST.exists": DIST.exists(),
+        "files_sample": files,
+    }
+
+
 @app.get("/{full_path:path}")
 async def serve_spa(full_path: str = ""):
     """Serve the React SPA. Specific static assets or index.html fallback."""
@@ -76,5 +89,5 @@ async def serve_spa(full_path: str = ""):
     target = DIST / full_path if full_path else DIST / "index.html"
     if target.is_file():
         return FileResponse(str(target))
-    # SPA fallback — let React Router handle the path
+    # SPA fallback
     return FileResponse(str(DIST / "index.html"))
