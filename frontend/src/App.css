@@ -279,6 +279,13 @@ button {
   letter-spacing: 0.06em;
 }
 
+.or-separator {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+}
+
 /* ───── 途中式 ───── */
 
 .steps {
@@ -345,6 +352,31 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+}
+
+.graph-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-graph-reset {
+  padding: 0.25rem 0.7rem;
+  font-size: 0.78rem;
+  background: #f0f0f0;
+  color: #555;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-graph-reset:hover {
+  background: #e0e0e0;
+}
+
+.graph-hint {
+  font-size: 0.75rem;
+  color: #aaa;
 }
 
 .graph-wrapper {

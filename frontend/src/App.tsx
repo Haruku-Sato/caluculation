@@ -152,25 +152,23 @@ export default function App() {
           {response.result === 'multiple' && (
             <>
               <p className="multi-label">複数の解があります：</p>
-              <div className="solution-sets">
-                {response.solutions.map((sol, idx) => (
-                  <div key={idx} className="solution-set">
-                    <span className="set-label">解 {idx + 1}</span>
-                    <ul className="solutions">
-                      {Object.entries(sol).map(([k, v]) => (
-                        <li key={k}>
-                          <span className="var">{k}</span>
-                          {' = '}
-                          <span
-                            className="val katex-val"
-                            dangerouslySetInnerHTML={{ __html: renderLatex(v) }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+              {response.solutions.map((sol, idx) => (
+                <div key={idx}>
+                  {idx > 0 && <p className="or-separator">または</p>}
+                  <ul className="solutions">
+                    {Object.entries(sol).map(([k, v]) => (
+                      <li key={k}>
+                        <span className="var">{k}</span>
+                        {' = '}
+                        <span
+                          className="val katex-val"
+                          dangerouslySetInnerHTML={{ __html: renderLatex(v) }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </>
           )}
 
