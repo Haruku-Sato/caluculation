@@ -278,3 +278,143 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+
+/* ───── 途中式 ───── */
+
+.steps {
+  margin-top: 1.5rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.25rem;
+}
+
+.steps h2 {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0;
+}
+
+.steps-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.75rem;
+  background: #f8f8ff;
+  border-radius: 8px;
+  border-left: 3px solid #6366f1;
+}
+
+.step-label {
+  font-size: 0.72rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.step-math {
+  font-size: 1rem;
+  color: #111;
+}
+
+/* ───── グラフ ───── */
+
+.graph-section {
+  margin-top: 1.5rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.25rem;
+}
+
+.graph-section h2 {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.graph-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.graph-wrapper {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: crosshair;
+  /* lock aspect ratio to 400:320 = 1.25 */
+  aspect-ratio: 400 / 320;
+}
+
+.graph-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.82rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-width: 80px;
+  z-index: 10;
+}
+
+.tooltip-x {
+  color: #555;
+  margin-bottom: 0.2rem;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+}
+
+.tooltip-y {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'Courier New', monospace;
+  color: #222;
+}
+
+.tooltip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  font-family: 'Courier New', monospace;
+}

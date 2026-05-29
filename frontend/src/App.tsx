@@ -3,12 +3,16 @@ import katex from 'katex'
 import 'katex/dist/katex.min.css'
 import './App.css'
 import MathKeyboard from './MathKeyboard'
+import GraphPanel from './GraphPanel'
+import type { GraphData } from './GraphPanel'
 
 interface SolveResponse {
   result: 'unique' | 'parametric' | 'multiple' | 'no_solution'
   solutions: Array<Record<string, string>>
   free_variables: string[]
   note?: string | null
+  steps?: Array<{ label: string; latex: string }>
+  graph_data?: GraphData | null
 }
 
 function renderLatex(tex: string): string {
@@ -190,6 +194,32 @@ export default function App() {
                 </p>
               )}
             </>
+          )}
+
+          {/* 途中式 */}
+          {response.steps && response.steps.length > 0 && (
+            <div className="steps">
+              <h2>途中式</h2>
+              <ol className="steps-list">
+                {response.steps.map((step, i) => (
+                  <li key={i}>
+                    <span className="step-label">{step.label}</span>
+                    <span
+                      className="step-math"
+                      dangerouslySetInnerHTML={{ __html: renderLatex(step.latex) }}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* グラフ */}
+          {response.graph_data && (
+            <div className="graph-section">
+              <h2>グラフ</h2>
+              <GraphPanel graphData={response.graph_data} />
+            </div>
           )}
         </div>
       )}

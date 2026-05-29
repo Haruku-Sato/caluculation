@@ -93,3 +93,53 @@ def test_missing_equals_raises():
 def test_unknown_variable_raises():
     with pytest.raises(ValueError, match="not found"):
         solve_equations(["x + y = 3"], variable_names=["z"])
+
+
+# --- steps ---
+
+def test_steps_present():
+    result = solve_equations(["x + 2y = 3", "2x - y = 1"])
+    assert "steps" in result
+    assert len(result["steps"]) >= 2
+    labels = [s["label"] for s in result["steps"]]
+    assert "元の方程式" in labels
+    assert "解" in labels
+
+
+def test_steps_no_solution():
+    result = solve_equations(["x = x + 1"])
+    labels = [s["label"] for s in result["steps"]]
+    assert "元の方程式" in labels
+    assert "解なし" in labels
+
+
+def test_steps_multiple():
+    result = solve_equations(["x^2 = 4"])
+    labels = [s["label"] for s in result["steps"]]
+    assert "解" in labels
+
+
+# --- graph_data ---
+
+def test_graph_data_two_line_system():
+    result = solve_equations(["x + 2y = 3", "2x - y = 1"])
+    gd = result["graph_data"]
+    assert gd is not None
+    assert len(gd["lines"]) == 2
+    assert len(gd["solution_points"]) == 1
+    pt = gd["solution_points"][0]
+    assert abs(pt["x"] - 1.0) < 0.01
+    assert abs(pt["y"] - 1.0) < 0.01
+
+
+def test_graph_data_parametric():
+    result = solve_equations(["x + 2y = 3x - y"])
+    gd = result["graph_data"]
+    assert gd is not None
+    assert len(gd["lines"]) >= 1
+    assert gd["solution_points"] == []
+
+
+def test_graph_data_none_for_single_var():
+    result = solve_equations(["x + 2 = 5"])
+    assert result["graph_data"] is None

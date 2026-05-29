@@ -1,6 +1,5 @@
-import os
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -54,6 +53,8 @@ class SolveResponse(BaseModel):
     solutions: list[dict[str, str]]
     free_variables: list[str]
     note: Optional[str] = None
+    steps: list[dict[str, str]] = []
+    graph_data: Optional[Any] = None
 
 
 @app.post("/api/solve", response_model=SolveResponse)
@@ -66,19 +67,6 @@ def solve_endpoint(request: SolveRequest):
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Solver error: {exc}")
     return result
-
-
-@app.get("/debug-path")
-async def debug_path():
-    """Temporary: shows file system state on Vercel for debugging."""
-    files = sorted(str(p.relative_to(DIST)) for p in DIST.rglob("*") if p.is_file())[:30] if DIST.exists() else []
-    return {
-        "__file__": __file__,
-        "cwd": os.getcwd(),
-        "DIST": str(DIST),
-        "DIST.exists": DIST.exists(),
-        "files_sample": files,
-    }
 
 
 @app.get("/{full_path:path}")
